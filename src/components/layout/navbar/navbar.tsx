@@ -17,6 +17,9 @@ export default function Navbar() {
 				</Link>
 
 				<nav className="hidden items-center gap-6 text-sm text-foreground/80 sm:flex">
+					<a href="#dashboards" className="hover:text-foreground">
+						Dashboards
+					</a>
 					<a href="#como-funciona" className="hover:text-foreground">
 						Cómo funciona
 					</a>
@@ -31,9 +34,9 @@ export default function Navbar() {
 				<div className="flex items-center gap-3">
 					<a
 						href="#contacto"
-						className="inline-flex h-9 items-center justify-center rounded-full border border-foreground/15 px-4 text-sm font-medium hover:border-foreground/25"
+						className="inline-flex h-9 items-center justify-center rounded-full bg-brand px-4 text-sm font-medium text-brand-foreground transition-transform duration-200 hover:-translate-y-0.5"
 					>
-						Pedir demo
+						Contactar
 					</a>
 				</div>
 			</div>

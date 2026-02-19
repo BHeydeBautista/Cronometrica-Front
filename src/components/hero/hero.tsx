@@ -4,7 +4,7 @@ import HeroCtas from "@/components/hero/hero-ctas";
 
 export default function Hero() {
   return (
-    <section className="rounded-3xl border border-foreground/10 bg-background p-8 sm:p-12">
+    <section className="fade-in-up rounded-3xl border border-foreground/10 bg-background p-8 sm:p-12">
       <div className="max-w-3xl">
         <div className="flex items-center gap-3">
           <Image
@@ -15,12 +15,12 @@ export default function Hero() {
             className="rounded"
             priority
           />
-          <p className="text-sm font-medium text-foreground/70">
+          <span className="inline-flex items-center rounded-full bg-brand-soft px-3 py-1 text-xs font-medium text-foreground/80">
             Competencias de natación — organización y cronometraje
-          </p>
+          </span>
         </div>
 
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
           Gestioná clubes, nadadores y resultados.
           <br />
           Cronometrá cada carril en competencia.

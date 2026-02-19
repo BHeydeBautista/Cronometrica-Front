@@ -6,7 +6,7 @@ function FlowCard({
   description: string;
 }) {
   return (
-    <div className="rounded-xl border border-foreground/10 p-5">
+    <div className="rounded-xl border border-foreground/10 bg-foreground/5 p-5 transition-transform duration-200 hover:-translate-y-0.5">
       <h3 className="font-medium">{title}</h3>
       <p className="mt-1 text-sm leading-6 text-foreground/70">{description}</p>
     </div>
