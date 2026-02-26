@@ -79,6 +79,8 @@ export default function LaneTimer({
   const elapsedMs = startEpochMs ? Math.max(0, effectiveNow - startEpochMs) : 0;
   const display = useMemo(() => formatMs(elapsedMs), [elapsedMs]);
 
+  const canCut = Boolean(startEpochMs) && isRunning;
+
   return (
     <div className="rounded-2xl border border-foreground/10 p-6">
       <div className="flex flex-col gap-1">
@@ -107,18 +109,15 @@ export default function LaneTimer({
           Inicio: juez central
         </Button>
         <Button
-          variant="outline"
-          onClick={() => setIsRunning(false)}
-          disabled={!isRunning}
-        >
-          Pausar
-        </Button>
-        <Button
           onClick={() => {
-            const cut = formatMs(elapsedMs);
+            if (!startEpochMs) return;
+
+            const cutEpoch = Date.now();
+            const cut = formatMs(Math.max(0, cutEpoch - startEpochMs));
+
             setLastCut(cut);
+            setCutEpochMs(cutEpoch);
             setIsRunning(false);
-            setCutEpochMs(Date.now());
 
             const channel = getRealtimeChannel();
             channel.postMessage({
@@ -127,14 +126,14 @@ export default function LaneTimer({
               swimmer: swimmerName,
               eventName: syncedEventName ?? eventName,
               cutTime: cut,
-              cutEpochMs: Date.now(),
+              cutEpochMs: cutEpoch,
             });
             channel.close();
           }}
-          disabled={!isRunning}
+          disabled={!canCut}
           variant="brand"
         >
-          Cortar tiempo
+          Pausar y registrar
         </Button>
         <Button
           variant="outline"
@@ -143,6 +142,7 @@ export default function LaneTimer({
             setStartEpochMs(null);
             setLastCut(null);
             setCutEpochMs(null);
+            setSyncedEventName(null);
           }}
         >
           Reiniciar

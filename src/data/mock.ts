@@ -47,20 +47,6 @@ export const mockCoaches: Coach[] = [
     active: true,
   },
   {
-    id: "coach-2",
-    clubId: mockClub.id,
-    name: "Juan Gómez",
-    roleLabel: "Entrenador",
-    active: true,
-  },
-  {
-    id: "coach-3",
-    clubId: mockClub.id,
-    name: "Lucía Díaz",
-    roleLabel: "Entrenadora",
-    active: false,
-  },
-  {
     id: "coach-4",
     clubId: "club-2",
     name: "Ceballos, Anahí",
@@ -152,7 +138,7 @@ export const mockSwimmers: Swimmer[] = [
   {
     id: "swimmer-10",
     clubId: mockClub.id,
-    coachId: "coach-2",
+    coachId: "coach-1",
     name: "Mathieu, María",
     category: "Mujeres 70-74",
     active: true,

@@ -42,14 +42,14 @@ export default function InstitutionDashboard() {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <StatCard
-          label="Entrenadores"
+          label="Entrenador representante"
           value={String(coaches.length)}
-          hint="Altas y bajas desde el panel"
+          hint="Único responsable del plantel"
         />
         <StatCard
           label="Nadadores"
           value={String(swimmersCount)}
-          hint="Cargados por entrenadores"
+          hint="Cargados por el representante"
         />
         <StatCard
           label="Puntos del club"
@@ -59,9 +59,9 @@ export default function InstitutionDashboard() {
       </div>
 
       <div className="mt-8">
-        <h2 className="text-lg font-semibold tracking-tight">Entrenadores</h2>
+        <h2 className="text-lg font-semibold tracking-tight">Entrenador representante</h2>
         <p className="mt-1 text-sm text-foreground/70">
-          Gestión de entrenadores y su plantel (borrador).
+          La institución solo define un entrenador fijo para el club.
         </p>
         <div className="mt-4">
           <SimpleTable

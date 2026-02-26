@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
 
 type Column<T> = {
+  /**
+   * Optional unique identifier for React rendering.
+   * Useful when you want to render multiple columns using the same `key`.
+   */
+  id?: string;
   key: keyof T;
   header: string;
   className?: string;
@@ -23,7 +28,7 @@ export default function SimpleTable<T extends Record<string, unknown>>({
           <tr>
             {columns.map((c) => (
               <th
-                key={String(c.key)}
+                key={c.id ?? String(c.key)}
                 className={`whitespace-nowrap px-4 py-3 font-medium ${c.className ?? ""}`}
               >
                 {c.header}
@@ -41,7 +46,7 @@ export default function SimpleTable<T extends Record<string, unknown>>({
                 const value = row[c.key];
                 return (
                   <td
-                    key={String(c.key)}
+                    key={c.id ?? String(c.key)}
                     className={`whitespace-nowrap px-4 py-3 text-foreground/80 ${c.className ?? ""}`}
                   >
                     {c.render

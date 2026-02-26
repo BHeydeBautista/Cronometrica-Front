@@ -6,9 +6,9 @@ export default function Contact() {
           Contacto
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-foreground/70 sm:text-base">
-          Este sitio es un primer borrador para presentación. Si querés, lo
-          siguiente es definir el alcance del MVP (roles, dashboards y modelo de
-          puntajes).
+          Si querés implementarlo en producción, el siguiente paso es definir el
+          alcance del MVP (roles, permisos, flujo de jornada y modelo de puntajes)
+          y conectar persistencia y auditoría.
         </p>
       </div>
     </section>

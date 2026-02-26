@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import Navbar from "@/components/layout/navbar/navbar";
-import Footer from "@/components/layout/footer/footer";
+import AppChrome from "@/components/layout/app-chrome";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-background text-foreground antialiased`}
       >
-        <div className="min-h-dvh">
-          <Navbar />
-          <main className="mx-auto w-full max-w-6xl px-6">{children}</main>
-          <Footer />
-        </div>
+        <AppChrome>{children}</AppChrome>
       </body>
     </html>
   );

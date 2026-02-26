@@ -18,6 +18,18 @@ type LaneCutRow = {
   cutTime: string;
 };
 
+function pad2(n: number) {
+  return n.toString().padStart(2, "0");
+}
+
+function formatMs(ms: number) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const centis = Math.floor((ms % 1000) / 10);
+  return `${minutes}:${pad2(seconds)},${pad2(centis)}`;
+}
+
 export default function CentralJudgeDashboard() {
   const [selectedEventId, setSelectedEventId] = useState<string>(mockEvents[0]?.id ?? "");
   const selectedEvent = useMemo(
@@ -28,7 +40,14 @@ export default function CentralJudgeDashboard() {
   const eventCategory = selectedEvent?.category;
 
   const [lastStart, setLastStart] = useState<number | null>(null);
+  const [nowEpochMs, setNowEpochMs] = useState(() => Date.now());
   const [cutsByLane, setCutsByLane] = useState<Record<string, LaneCutRow>>({});
+
+  useEffect(() => {
+    if (!lastStart) return;
+    const id = window.setInterval(() => setNowEpochMs(Date.now()), 50);
+    return () => window.clearInterval(id);
+  }, [lastStart]);
 
   useEffect(() => {
     const channel = getRealtimeChannel();
@@ -55,6 +74,7 @@ export default function CentralJudgeDashboard() {
   }, []);
 
   const rows = useMemo(() => Object.values(cutsByLane), [cutsByLane]);
+  const globalTime = lastStart ? formatMs(Math.max(0, nowEpochMs - lastStart)) : "0:00,00";
 
   return (
     <div>
@@ -63,6 +83,19 @@ export default function CentralJudgeDashboard() {
         <h2 className="mt-2 text-lg font-semibold tracking-tight">
           Inicio global de cronómetros
         </h2>
+
+        <div className="mt-4 rounded-2xl border border-foreground/10 bg-background p-5">
+          <p className="text-xs font-medium text-foreground/60">Tiempo global</p>
+          <p className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
+            {globalTime}
+          </p>
+          <p className="mt-2 text-xs text-foreground/60">
+            {lastStart
+              ? `Iniciado a las ${new Date(lastStart).toLocaleTimeString()}`
+              : "Esperando inicio…"}
+          </p>
+        </div>
+
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1 text-sm">
             <span className="text-xs font-medium text-foreground/60">Evento</span>

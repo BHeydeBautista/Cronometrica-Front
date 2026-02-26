@@ -17,9 +17,6 @@ export default function Navbar() {
 				</Link>
 
 				<nav className="hidden items-center gap-6 text-sm text-foreground/80 sm:flex">
-					<a href="#dashboards" className="hover:text-foreground">
-						Dashboards
-					</a>
 					<a href="#como-funciona" className="hover:text-foreground">
 						Cómo funciona
 					</a>
