@@ -1,10 +1,11 @@
 "use client";
 
-import SimpleTable from "@/components/dashboards/_shared/simple-table";
-import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
+
+import { mockClub } from "@/data/mock";
+
+import SimpleTable from "@/components/dashboards/_shared/simple-table";
 
 type DashboardEventRow = {
   event: string;
@@ -41,9 +42,9 @@ function StatusDot({ className }: { className: string }) {
 }
 
 export default function OrganizerDashboard() {
-  const [meetName, setMeetName] = useState("Jornada de Natación Interclubes");
-  const [place, setPlace] = useState("Club Macia");
-  const [date, setDate] = useState("25 Abril 2024");
+  const [meetName, setMeetName] = useState("Interclubes Verano 2026");
+  const [place, setPlace] = useState(mockClub.name);
+  const [date, setDate] = useState("25 Abril 2026");
   const [pool, setPool] = useState<"25" | "50" | "30">("25");
   const [heat, setHeat] = useState("1");
   const [lanes, setLanes] = useState("6");
@@ -148,48 +149,6 @@ export default function OrganizerDashboard() {
           <div className="absolute inset-0 bg-black/25" />
 
           <div className="relative mx-auto w-full max-w-6xl px-6 pt-4">
-          <div className="flex items-center justify-between text-background/90">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/img/aec.jpeg"
-                  alt="Logo"
-                  width={24}
-                  height={24}
-                  className="rounded"
-                  priority
-                />
-                <nav className="flex items-center gap-6 text-sm font-medium">
-                  <Link href="/dashboard/institucion" className="hover:text-background">
-                    Clubes
-                  </Link>
-                  <Link href="/dashboard/juez" className="hover:text-background">
-                    Jueces
-                  </Link>
-                </nav>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 text-sm font-medium">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-background/15 text-background backdrop-blur">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M4 20a8 8 0 0 1 16 0"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-              <span>Macia</span>
-            </div>
-          </div>
-
           <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h1 className="text-3xl font-semibold tracking-tight text-background sm:text-4xl">

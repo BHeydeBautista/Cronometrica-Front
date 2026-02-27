@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
 	return (
 		<footer className="mt-16 border-t border-foreground/10">
@@ -6,15 +8,15 @@ export default function Footer() {
 					Borrador de presentación — Cronómetro de Natación
 				</p>
 				<div className="flex items-center gap-6 text-sm">
-					<a href="#como-funciona" className="text-foreground/70 hover:text-foreground">
+					<Link href="/#como-funciona" className="text-foreground/70 hover:text-foreground">
 						Cómo funciona
-					</a>
-					<a href="#organizacion" className="text-foreground/70 hover:text-foreground">
+					</Link>
+					<Link href="/#organizacion" className="text-foreground/70 hover:text-foreground">
 						Organización
-					</a>
-					<a href="#contacto" className="text-foreground/70 hover:text-foreground">
+					</Link>
+					<Link href="/#contacto" className="text-foreground/70 hover:text-foreground">
 						Contacto
-					</a>
+					</Link>
 				</div>
 			</div>
 		</footer>

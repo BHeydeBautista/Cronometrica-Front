@@ -115,97 +115,6 @@ export default function CoachDashboard() {
         <div className="absolute inset-0 bg-black/25" />
 
         <div className="relative mx-auto w-full max-w-6xl px-6 pt-4 pb-14">
-          <header className="flex items-center justify-between text-background/90">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium hover:text-background"
-            >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/15 backdrop-blur">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M15 18 9 12l6-6"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              <span>Volver</span>
-            </Link>
-
-            <div className="flex items-center gap-2.5 text-sm font-medium">
-              <button
-                type="button"
-                className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/15 backdrop-blur hover:bg-background/20"
-                aria-label="Notificaciones"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M13.7 21a2 2 0 0 1-3.4 0"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-amber-400" />
-              </button>
-
-              <button
-                type="button"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/15 backdrop-blur hover:bg-background/20"
-                aria-label="Cuenta"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  />
-                  <path
-                    d="M4 20a8 8 0 0 1 16 0"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-
-              <button
-                type="button"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/15 backdrop-blur hover:bg-background/20"
-                aria-label="Menú"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M4 7h16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M4 12h16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M4 17h16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-            </div>
-          </header>
-
           <div className="mt-10">
             <h1 className="text-3xl font-semibold tracking-tight text-background sm:text-4xl">
               Panel del Entrenador
@@ -363,7 +272,7 @@ export default function CoachDashboard() {
                 </div>
 
                 <Link
-                  href="#"
+                  href="/resultados/3ra-jornada"
                   className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-foreground/10 bg-background/70 px-4 py-3 text-sm font-semibold text-sky-900 hover:bg-background"
                 >
                   Ver Historial Completo
@@ -424,6 +333,7 @@ export default function CoachDashboard() {
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <div className="relative flex-1">
                     <input
+                      aria-label="Buscar nadador"
                       placeholder="Buscar nadador..."
                       className="h-10 w-full rounded-md border border-foreground/15 bg-background/80 px-3 text-sm text-foreground placeholder:text-foreground/50"
                     />
@@ -437,8 +347,9 @@ export default function CoachDashboard() {
                   </button>
                 </div>
 
-                <div className="mt-5 overflow-hidden rounded-lg border border-foreground/10 bg-background/70">
-                  <div className="grid grid-cols-[1fr_120px_110px] gap-3 border-b border-foreground/10 px-4 py-3 text-xs font-semibold text-foreground/70">
+                <div className="mt-5 overflow-x-auto rounded-lg border border-foreground/10 bg-background/70">
+                  <div className="min-w-[520px]">
+                  <div className="grid grid-cols-[1fr_160px_110px] gap-3 border-b border-foreground/10 px-4 py-3 text-xs font-semibold text-foreground/70">
                     <div>Nadador</div>
                     <div className="text-center">Categoría</div>
                     <div className="text-right">Mejor Marca</div>
@@ -450,7 +361,7 @@ export default function CoachDashboard() {
                       return (
                         <div
                           key={swimmer.id}
-                          className="grid grid-cols-[1fr_120px_110px] items-center gap-3 px-4 py-3 text-sm"
+                          className="grid grid-cols-[1fr_160px_110px] items-center gap-3 px-4 py-3 text-sm"
                         >
                           <div className="flex min-w-0 items-center gap-3">
                             <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-950/10 text-xs font-semibold text-sky-900">
@@ -468,13 +379,15 @@ export default function CoachDashboard() {
                       );
                     })}
                   </div>
+                  </div>
                 </div>
 
-                <Link
-                  href="#"
-                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-foreground/10 bg-background/70 px-4 py-3 text-sm font-semibold text-sky-900 hover:bg-background"
+                <button
+                  type="button"
+                  disabled
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-foreground/10 bg-background/70 px-4 py-3 text-sm font-semibold text-sky-900 opacity-80"
                 >
-                  Ver Todos los Nadadores
+                  Ver Todos los Nadadores (próximamente)
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path
                       d="M9 18 15 12 9 6"
@@ -484,7 +397,7 @@ export default function CoachDashboard() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </Link>
+                </button>
               </div>
             </section>
           </div>
@@ -524,7 +437,8 @@ export default function CoachDashboard() {
             </div>
 
             <div className="p-6">
-              <div className="overflow-hidden rounded-lg border border-foreground/10 bg-background/70">
+              <div className="overflow-x-auto rounded-lg border border-foreground/10 bg-background/70">
+                <div className="min-w-[680px]">
                 <div className="grid grid-cols-[1.2fr_0.9fr_0.9fr_0.8fr] gap-3 border-b border-foreground/10 px-4 py-3 text-xs font-semibold text-foreground/70">
                   <div>Evento</div>
                   <div>Fecha</div>
@@ -563,13 +477,15 @@ export default function CoachDashboard() {
                     </div>
                   ))}
                 </div>
+                </div>
               </div>
 
-              <Link
-                href="#"
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-foreground/10 bg-background/70 px-4 py-3 text-sm font-semibold text-sky-900 hover:bg-background"
+              <button
+                type="button"
+                disabled
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-foreground/10 bg-background/70 px-4 py-3 text-sm font-semibold text-sky-900 opacity-80"
               >
-                Ver Todos los Nadadores
+                Ver Todos los Eventos (próximamente)
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M9 18 15 12 9 6"
@@ -579,7 +495,7 @@ export default function CoachDashboard() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </Link>
+              </button>
             </div>
           </section>
 
@@ -599,12 +515,13 @@ export default function CoachDashboard() {
                 <h2 className="text-lg font-semibold">Noticias y Recordatorios</h2>
               </div>
 
-              <Link
-                href="#"
-                className="inline-flex h-9 items-center justify-center rounded-md border border-foreground/10 bg-background/70 px-4 text-sm font-semibold text-sky-900 hover:bg-background"
+              <button
+                type="button"
+                disabled
+                className="inline-flex h-9 items-center justify-center rounded-md border border-foreground/10 bg-background/70 px-4 text-sm font-semibold text-sky-900 opacity-80"
               >
                 Ver Todas
-              </Link>
+              </button>
             </div>
 
             <div className="p-6">
@@ -689,9 +606,10 @@ export default function CoachDashboard() {
                           </div>
                         </div>
 
-                        <Link
-                          href="#"
-                          className="shrink-0 inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-semibold text-sky-900 hover:bg-background"
+                        <button
+                          type="button"
+                          disabled
+                          className="shrink-0 inline-flex h-9 items-center justify-center rounded-md px-3 text-sm font-semibold text-sky-900 opacity-80"
                           aria-label="Ver detalle"
                         >
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -703,7 +621,7 @@ export default function CoachDashboard() {
                               strokeLinejoin="round"
                             />
                           </svg>
-                        </Link>
+                        </button>
                       </div>
                     );
                   })}

@@ -17,24 +17,24 @@ export default function Navbar() {
 				</Link>
 
 				<nav className="hidden items-center gap-6 text-sm text-foreground/80 sm:flex">
-					<a href="#como-funciona" className="hover:text-foreground">
+					<Link href="/#como-funciona" className="hover:text-foreground">
 						Cómo funciona
-					</a>
-					<a href="#organizacion" className="hover:text-foreground">
+					</Link>
+					<Link href="/#organizacion" className="hover:text-foreground">
 						Organización
-					</a>
-					<a href="#contacto" className="hover:text-foreground">
+					</Link>
+					<Link href="/#contacto" className="hover:text-foreground">
 						Contacto
-					</a>
+					</Link>
 				</nav>
 
 				<div className="flex items-center gap-3">
-					<a
-						href="#contacto"
+					<Link
+						href="/#contacto"
 						className="inline-flex h-9 items-center justify-center rounded-full bg-brand px-4 text-sm font-medium text-brand-foreground transition-transform duration-200 hover:-translate-y-0.5"
 					>
 						Contactar
-					</a>
+					</Link>
 				</div>
 			</div>
 		</header>
