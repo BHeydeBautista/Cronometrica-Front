@@ -9,6 +9,8 @@ import {
   type RealtimeMessage,
 } from "@/components/dashboards/juez/realtime";
 
+import { mockMeet } from "@/data/mock";
+
 type LaneState =
   | { kind: "waiting" }
   | { kind: "cut"; cutTime: string }
@@ -38,11 +40,11 @@ export default function CentralJudgeDashboard() {
   const [cutsByLane, setCutsByLane] = useState<Record<string, string>>({});
   const [falseStartByLane, setFalseStartByLane] = useState<Record<string, boolean>>({});
 
-  const meetName = "Interclubes Verano 2026";
+  const meetName = mockMeet.name;
   const eventTitle = "Evento #4 - 50m Libre";
   const serieLabel = "2 / 5";
   const categoryLabel = "Juveniles";
-  const poolLabel = "25m";
+  const poolLabel = mockMeet.poolLabel;
 
   const lanes = useMemo(
     () => ["1", "2", "3", "4", "5"] as const,
@@ -239,6 +241,9 @@ export default function CentralJudgeDashboard() {
                   eventId: "event-4",
                   eventName: eventTitle,
                   category: categoryLabel,
+                  meetName,
+                  poolLabel,
+                  serieLabel,
                 });
               }}
               className="inline-flex h-14 w-[240px] items-center justify-center rounded-md bg-red-600 text-2xl font-semibold tracking-wide text-white shadow-sm hover:bg-red-700"

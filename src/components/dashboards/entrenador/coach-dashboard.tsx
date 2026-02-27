@@ -65,7 +65,7 @@ export default function CoachDashboard() {
   const swimmersPreview = coachSwimmers.slice(0, 4);
 
   const swimmerIds = new Set(coachSwimmers.map((s) => s.id));
-  const medalsCount = mockResults.filter((r) => swimmerIds.has(r.swimmerId)).length;
+  const resultsCount = mockResults.filter((r) => swimmerIds.has(r.swimmerId)).length;
 
   const upcomingEvents = [
     {
@@ -154,7 +154,7 @@ export default function CoachDashboard() {
                   Bienvenido {coachFirstName || coach?.name || ""}.
                 </p>
                 <p className="mt-2 max-w-xl text-sm leading-6 text-foreground/70">
-                  Aquí tienes un resumen rápido de tus nadadores y sus medallas.
+                  Aquí tienes un resumen rápido de tus nadadores, sus resultados y mejores marcas.
                 </p>
                 <p className="mt-2 text-sm text-foreground/60">Club: {mockClub.name}</p>
               </div>
@@ -261,10 +261,10 @@ export default function CoachDashboard() {
                       </span>
                       <div>
                         <div className="text-3xl font-semibold tracking-tight">
-                          {medalsCount}
+                          {resultsCount}
                         </div>
                         <div className="text-sm font-medium text-foreground/80">
-                          Medallas
+                          Resultados
                         </div>
                       </div>
                     </div>
@@ -442,7 +442,7 @@ export default function CoachDashboard() {
                 <div className="grid grid-cols-[1.2fr_0.9fr_0.9fr_0.8fr] gap-3 border-b border-foreground/10 px-4 py-3 text-xs font-semibold text-foreground/70">
                   <div>Evento</div>
                   <div>Fecha</div>
-                  <div>Medallas</div>
+                  <div>Prueba</div>
                   <div className="text-right">Resultado</div>
                 </div>
 

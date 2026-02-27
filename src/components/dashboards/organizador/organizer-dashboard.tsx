@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
-import { mockClub } from "@/data/mock";
+import { mockMeet } from "@/data/mock";
 
 import SimpleTable from "@/components/dashboards/_shared/simple-table";
 
@@ -42,9 +42,9 @@ function StatusDot({ className }: { className: string }) {
 }
 
 export default function OrganizerDashboard() {
-  const [meetName, setMeetName] = useState("Interclubes Verano 2026");
-  const [place, setPlace] = useState(mockClub.name);
-  const [date, setDate] = useState("25 Abril 2026");
+  const [meetName, setMeetName] = useState<string>(mockMeet.name);
+  const [place, setPlace] = useState<string>(mockMeet.venue);
+  const [date, setDate] = useState<string>(mockMeet.dateLabel);
   const [pool, setPool] = useState<"25" | "50" | "30">("25");
   const [heat, setHeat] = useState("1");
   const [lanes, setLanes] = useState("6");

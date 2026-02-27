@@ -9,6 +9,14 @@ import type {
   Swimmer,
 } from "@/types";
 
+export const mockMeet = {
+  id: "meet-1",
+  name: "Interclubes Verano 2026",
+  venue: "Club Macia",
+  dateLabel: "25 Abr 2026",
+  poolLabel: "25m",
+} as const;
+
 export const mockClub: Club = {
   id: "club-1",
   name: "Asociación Ejemplo Club",

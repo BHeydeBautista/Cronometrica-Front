@@ -7,6 +7,9 @@ export type RealtimeMessage =
       eventId: string;
       eventName: string;
       category?: string;
+      meetName?: string;
+      poolLabel?: string;
+      serieLabel?: string;
     }
   | {
       type: "STOP_ALL";
