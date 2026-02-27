@@ -14,7 +14,19 @@ function formatMs(ms: number) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   const centis = Math.floor((ms % 1000) / 10);
-  return `${minutes}:${pad2(seconds)},${pad2(centis)}`;
+  return `${pad2(minutes)}:${pad2(seconds)}.${pad2(centis)}`;
+}
+
+function formatCutMs(ms: number) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const centis = Math.floor((ms % 1000) / 10);
+
+  if (minutes <= 0) {
+    return `${seconds}.${pad2(centis)}`;
+  }
+  return `${minutes}:${pad2(seconds)}.${pad2(centis)}`;
 }
 
 type LaneTimerProps = {
@@ -58,6 +70,12 @@ export default function LaneTimer({
         setCutEpochMs(null);
         setLastCut(null);
         setIsRunning(true);
+      }
+
+      if (msg?.type === "STOP_ALL") {
+        const stopMsg = event.data as { type: "STOP_ALL"; stopEpochMs: number };
+        setIsRunning(false);
+        setCutEpochMs(stopMsg.stopEpochMs);
       }
 
       if (msg?.type === "RESET_ALL") {
@@ -113,7 +131,7 @@ export default function LaneTimer({
             if (!startEpochMs) return;
 
             const cutEpoch = Date.now();
-            const cut = formatMs(Math.max(0, cutEpoch - startEpochMs));
+            const cut = formatCutMs(Math.max(0, cutEpoch - startEpochMs));
 
             setLastCut(cut);
             setCutEpochMs(cutEpoch);

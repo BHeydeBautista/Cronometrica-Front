@@ -9,6 +9,10 @@ export type RealtimeMessage =
       category?: string;
     }
   | {
+      type: "STOP_ALL";
+      stopEpochMs: number;
+    }
+  | {
       type: "RESET_ALL";
     }
   | {
