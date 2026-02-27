@@ -7,13 +7,13 @@ export default function Navbar() {
 			<div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
 				<Link href="/" className="flex items-center gap-3 font-semibold tracking-tight">
 					<Image
-						src="/img/aec.jpeg"
-						alt="Logo"
-						width={28}
-						height={28}
-						className="rounded"
+						src="/img/systemium.jpeg"
+						alt="Systemium"
+						width={40}
+						height={40}
+						className="rounded h-10 w-10"
 					/>
-					<span>Cronómetro</span>
+					<span>Aquatiempo</span>
 				</Link>
 
 				<nav className="hidden items-center gap-6 text-sm text-foreground/80 sm:flex">

@@ -246,7 +246,7 @@ export default function InstitutionDashboard() {
               <div className="p-6">
                 <div className="flex items-start gap-4">
                   <Image
-                    src="/img/aec.jpeg"
+                    src="/img/systemium.jpeg"
                     alt="Entrenador"
                     width={56}
                     height={56}
@@ -430,7 +430,7 @@ export default function InstitutionDashboard() {
                       >
                         <div className="flex min-w-0 items-center gap-3">
                           <Image
-                            src="/img/aec.jpeg"
+                            src="/img/systemium.jpeg"
                             alt="Evento"
                             width={28}
                             height={28}

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cronómetro de Natación",
+  title: "Aquatiempo",
   description:
     "Organización de competencias de natación: cronometraje por carril, carga de nadadores, resultados y puntos por club.",
 };

@@ -16,11 +16,11 @@ export default function Hero() {
             <div className="text-background">
               <div className="flex items-center gap-3">
                 <Image
-                  src="/img/aec.jpeg"
-                  alt="Logo"
-                  width={34}
-                  height={34}
-                  className="rounded"
+                  src="/img/systemium.jpeg"
+                  alt="Systemium"
+                  width={48}
+                  height={48}
+                  className="rounded h-12 w-12"
                   priority
                 />
                 <span className="inline-flex items-center rounded-full bg-background/15 px-3 py-1 text-xs font-medium text-background/90 backdrop-blur">

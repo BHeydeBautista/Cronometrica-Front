@@ -19,7 +19,7 @@ export const mockMeet = {
 
 export const mockClub: Club = {
   id: "club-1",
-  name: "Asociación Ejemplo Club",
+  name: "Systemium",
   status: "Verificado",
   city: "Paraná, Entre Ríos",
 };
