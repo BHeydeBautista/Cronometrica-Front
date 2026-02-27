@@ -6,13 +6,15 @@ export default function Navbar() {
 		<header className="sticky top-0 z-50 border-b border-foreground/10 bg-background/80 backdrop-blur">
 			<div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
 				<Link href="/" className="flex items-center gap-3 font-semibold tracking-tight">
-					<Image
-						src="/img/systemium.jpeg"
-						alt="Systemium"
-						width={40}
-						height={40}
-						className="rounded h-10 w-10"
-					/>
+					<span className="relative h-[80px] w-[80px] shrink-0">
+						<Image
+							src="/img/logosystemium.png"
+							alt="Aquatiempo"
+							fill
+							className="object-contain"
+							priority
+						/>
+					</span>
 					<span>Aquatiempo</span>
 				</Link>
 

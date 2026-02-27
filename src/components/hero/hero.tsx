@@ -9,31 +9,32 @@ export default function Hero() {
         className="relative left-1/2 w-screen -translate-x-1/2 bg-cover bg-center"
         style={{ backgroundImage: "url(/img/fondo1.png)" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/25 via-foreground/10 to-background/0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/70 via-foreground/35 to-background/10" />
 
         <div className="relative mx-auto w-full max-w-6xl px-6 py-12 sm:py-16">
           <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-            <div className="text-background">
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/img/systemium.jpeg"
-                  alt="Systemium"
-                  width={48}
-                  height={48}
-                  className="rounded h-12 w-12"
-                  priority
-                />
-                <span className="inline-flex items-center rounded-full bg-background/15 px-3 py-1 text-xs font-medium text-background/90 backdrop-blur">
+            <div className="rounded-2xl bg-background/10 p-6 text-background backdrop-blur-md sm:p-8">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <span className="relative h-[96px] w-[96px] shrink-0 sm:h-[128px] sm:w-[128px]">
+                  <Image
+                    src="/img/logosystemium.png"
+                    alt="Aquatiempo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </span>
+                <span className="inline-flex max-w-xl items-center rounded-full bg-background/15 px-3 py-1 text-xs font-medium text-background/90 backdrop-blur">
                   Competencias de natación — organización y cronometraje
                 </span>
               </div>
 
-              <h1 className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">
+              <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
                 Cronometraje por carril, orden y trazabilidad.
                 <br />
                 Todo en una sola app.
               </h1>
-              <p className="mt-4 max-w-2xl text-sm leading-6 text-background/90 sm:text-base">
+              <p className="mt-4 max-w-2xl text-base leading-7 text-background/90">
                 Una plataforma para jornadas completas: instituciones, entrenador representante,
                 nadadores, eventos y resultados.
               </p>

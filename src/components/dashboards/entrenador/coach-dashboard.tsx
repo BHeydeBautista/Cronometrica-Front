@@ -160,7 +160,7 @@ export default function CoachDashboard() {
               </div>
 
               <Image
-                src="/img/systemium.jpeg"
+                src="/img/logosystemium.png"
                 alt="Foto de perfil"
                 width={64}
                 height={64}
@@ -454,7 +454,7 @@ export default function CoachDashboard() {
                     >
                       <div className="flex min-w-0 items-center gap-3">
                         <Image
-                          src="/img/systemium.jpeg"
+                          src="/img/logosystemium.png"
                           alt="Avatar"
                           width={32}
                           height={32}
