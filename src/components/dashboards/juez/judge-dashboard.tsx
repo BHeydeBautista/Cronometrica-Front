@@ -13,7 +13,18 @@ const JUDGES_STORAGE_KEY = "cronometro.judgeAssignments.v1";
 export default function JudgeDashboard() {
   const searchParams = useSearchParams();
   const laneFromUrl = searchParams.get("lane");
-  const [judgeAssignments, setJudgeAssignments] = useState<JudgeAssignment[]>(mockJudgeAssignments);
+  const [judgeAssignments] = useState<JudgeAssignment[]>(() => {
+    try {
+      if (typeof window === "undefined") return mockJudgeAssignments;
+      const raw = window.localStorage.getItem(JUDGES_STORAGE_KEY);
+      if (!raw) return mockJudgeAssignments;
+      const parsed = JSON.parse(raw) as JudgeAssignment[];
+      if (Array.isArray(parsed) && parsed.length) return parsed;
+    } catch {
+      // ignore
+    }
+    return mockJudgeAssignments;
+  });
 
   const lane = laneFromUrl ?? judgeAssignments[0]?.lane ?? "Carril 1";
   const [selectedEventId, setSelectedEventId] = useState<string>(mockEvents[0]?.id ?? "");
@@ -23,21 +34,6 @@ export default function JudgeDashboard() {
   );
   const eventName = selectedEvent?.name ?? "Evento";
   const category = selectedEvent?.category ?? "Mujeres 35-39";
-
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(JUDGES_STORAGE_KEY);
-      if (!raw) {
-        return;
-      }
-      const parsed = JSON.parse(raw) as JudgeAssignment[];
-      if (Array.isArray(parsed) && parsed.length) {
-        setJudgeAssignments(parsed);
-      }
-    } catch {
-      // ignore
-    }
-  }, []);
 
   const assigned = useMemo(
     () => judgeAssignments.find((j) => j.lane === lane) ?? null,
