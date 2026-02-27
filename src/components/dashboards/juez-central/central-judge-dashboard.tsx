@@ -36,6 +36,7 @@ export default function CentralJudgeDashboard() {
   const [pausedAt, setPausedAt] = useState<number | null>(null);
   const [nowEpochMs, setNowEpochMs] = useState(() => Date.now());
   const [cutsByLane, setCutsByLane] = useState<Record<string, string>>({});
+  const [falseStartByLane, setFalseStartByLane] = useState<Record<string, boolean>>({});
 
   const meetName = "Interclubes Verano 2026";
   const eventTitle = "Evento #4 - 50m Libre";
@@ -64,6 +65,18 @@ export default function CentralJudgeDashboard() {
           ...prev,
           [normalizedLane]: msg.cutTime,
         }));
+        setFalseStartByLane((prev) => ({
+          ...prev,
+          [normalizedLane]: false,
+        }));
+      }
+
+      if (msg?.type === "LANE_FALSE_START") {
+        const normalizedLane = normalizeLaneLabel(msg.lane);
+        setFalseStartByLane((prev) => ({
+          ...prev,
+          [normalizedLane]: true,
+        }));
       }
     };
 
@@ -86,6 +99,11 @@ export default function CentralJudgeDashboard() {
         continue;
       }
 
+      if (falseStartByLane[lane]) {
+        stateByLane[lane] = { kind: "waiting" };
+        continue;
+      }
+
       const cutTime = cutsByLane[lane];
       if (cutTime) {
         stateByLane[lane] = { kind: "cut", cutTime };
@@ -94,7 +112,7 @@ export default function CentralJudgeDashboard() {
       stateByLane[lane] = { kind: "waiting" };
     }
     return stateByLane;
-  }, [cutsByLane, lanes]);
+  }, [cutsByLane, falseStartByLane, lanes]);
 
   return (
     <div
@@ -164,6 +182,7 @@ export default function CentralJudgeDashboard() {
                   setLastStart(null);
                   setPausedAt(null);
                   setCutsByLane({});
+                  setFalseStartByLane({});
                   broadcastRealtime({ type: "RESET_ALL" });
                 }}
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-amber-400 px-4 text-sm font-semibold text-sky-950 hover:bg-amber-300"
@@ -258,6 +277,7 @@ export default function CentralJudgeDashboard() {
                 const startEpochMs = Date.now();
                 setLastStart(startEpochMs);
                 setPausedAt(null);
+                setFalseStartByLane({});
                 broadcastRealtime({
                   type: "START_ALL",
                   startEpochMs,
@@ -345,8 +365,12 @@ export default function CentralJudgeDashboard() {
                 {lanes.map((lane) => {
                   const state = laneStates[lane];
 
+                  const isFalseStart = Boolean(falseStartByLane[lane]);
+
                   const rowClass =
-                    state.kind === "cut"
+                    isFalseStart
+                      ? "bg-red-600/35"
+                      : state.kind === "cut"
                       ? "bg-emerald-600/45"
                       : "bg-sky-950/30";
 
@@ -357,7 +381,9 @@ export default function CentralJudgeDashboard() {
                     >
                       <div className="flex items-baseline gap-4">
                         <div className="text-lg font-semibold">Carril {lane}</div>
-                        {state.kind === "waiting" ? (
+                        {isFalseStart ? (
+                          <div className="text-base font-semibold text-background/95">Falso inicio</div>
+                        ) : state.kind === "waiting" ? (
                           <div className="text-base font-semibold text-amber-300">Esperando</div>
                         ) : state.kind === "cut" ? (
                           <div className="text-base font-semibold text-background/90">
@@ -378,6 +404,10 @@ export default function CentralJudgeDashboard() {
                         {state.kind === "disabled" ? (
                           <div className="rounded-md bg-background/10 px-3 py-2 text-sm font-semibold text-background/60">
                             Desactivado
+                          </div>
+                        ) : isFalseStart ? (
+                          <div className="rounded-md bg-background/10 px-3 py-2 text-sm font-semibold text-background/85">
+                            Revisar
                           </div>
                         ) : state.kind === "cut" ? (
                           <div className="flex items-center gap-2">

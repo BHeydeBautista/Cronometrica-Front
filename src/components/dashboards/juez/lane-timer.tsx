@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import Button from "@/components/dashboards/_shared/button";
 import { getRealtimeChannel } from "@/components/dashboards/juez/realtime";
 
 function pad2(n: number) {
@@ -31,12 +30,14 @@ function formatCutMs(ms: number) {
 
 type LaneTimerProps = {
   laneLabel: string;
+  judgeName: string;
   swimmerName: string;
   eventName: string;
 };
 
 export default function LaneTimer({
   laneLabel,
+  judgeName,
   swimmerName,
   eventName,
 }: LaneTimerProps) {
@@ -46,6 +47,7 @@ export default function LaneTimer({
   const [lastCut, setLastCut] = useState<string | null>(null);
   const [cutEpochMs, setCutEpochMs] = useState<number | null>(null);
   const [syncedEventName, setSyncedEventName] = useState<string | null>(null);
+  const [falseStart, setFalseStart] = useState(false);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -69,6 +71,7 @@ export default function LaneTimer({
         setSyncedEventName(startMsg.eventName);
         setCutEpochMs(null);
         setLastCut(null);
+        setFalseStart(false);
         setIsRunning(true);
       }
 
@@ -84,6 +87,7 @@ export default function LaneTimer({
         setCutEpochMs(null);
         setLastCut(null);
         setSyncedEventName(null);
+        setFalseStart(false);
       }
     };
     channel.addEventListener("message", handler);
@@ -98,73 +102,162 @@ export default function LaneTimer({
   const display = useMemo(() => formatMs(elapsedMs), [elapsedMs]);
 
   const canCut = Boolean(startEpochMs) && isRunning;
+  const canFalseStart = !startEpochMs && !falseStart;
+
+  const laneNumber = useMemo(() => {
+    const match = laneLabel.match(/\d+/);
+    return match?.[0] ?? laneLabel;
+  }, [laneLabel]);
+
+  const statusLabel = isRunning ? "En Curso" : startEpochMs ? "Pausado" : "Esperando";
 
   return (
-    <div className="rounded-2xl border border-foreground/10 p-6">
-      <div className="flex flex-col gap-1">
-        <p className="text-xs font-medium text-foreground/60">Carril asignado</p>
-        <p className="text-lg font-semibold tracking-tight">{laneLabel}</p>
-        <p className="mt-2 text-sm text-foreground/70">
-          Evento: {syncedEventName ?? eventName}
-        </p>
-        <p className="text-sm text-foreground/70">Nadador: {swimmerName}</p>
-      </div>
+    <div
+      className="relative left-1/2 min-h-[100svh] w-screen -translate-x-1/2 bg-cover bg-top"
+      style={{ backgroundImage: "url(/img/fondo2.png)" }}
+    >
+      <div className="absolute inset-0 bg-black/25" />
 
-      <div className="mt-6 rounded-2xl border border-foreground/10 bg-foreground/5 p-6">
-        <p className="text-xs font-medium text-foreground/60">Tiempo</p>
-        <p className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
-          {display}
-        </p>
-        {lastCut ? (
-          <p className="mt-2 text-sm text-foreground/70">Último corte: {lastCut}</p>
-        ) : (
-          <p className="mt-2 text-sm text-foreground/70">Aún sin cortes</p>
-        )}
-      </div>
+      <div className="relative mx-auto flex w-full max-w-3xl items-start justify-center px-6 pt-24 pb-16">
+        <div className="w-full overflow-hidden rounded-xl border border-background/10 bg-sky-950/55 text-background shadow-sm backdrop-blur">
+          <div className="border-b border-background/10 px-6 py-4 text-center">
+            <h1 className="text-3xl font-semibold tracking-tight">Panel del Juez de Carril</h1>
+          </div>
 
-      <div className="mt-6 flex flex-wrap gap-2">
-        <Button variant="outline" disabled>
-          Inicio: juez central
-        </Button>
-        <Button
-          onClick={() => {
-            if (!startEpochMs) return;
+          <div className="px-6 py-5">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="inline-flex h-10 items-center justify-center rounded-md bg-amber-400 px-4 text-base font-extrabold tracking-wide text-sky-950">
+                  CARRIL {laneNumber}
+                </div>
+                <div className="text-3xl font-semibold tracking-tight">{judgeName}</div>
+              </div>
 
-            const cutEpoch = Date.now();
-            const cut = formatCutMs(Math.max(0, cutEpoch - startEpochMs));
+              <div className="flex items-center gap-2">
+                <div className="overflow-hidden rounded-sm border border-background/15">
+                  <div className="h-2.5 w-9 bg-sky-400" />
+                  <div className="relative h-2.5 w-9 bg-background/90">
+                    <div className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300" />
+                  </div>
+                  <div className="h-2.5 w-9 bg-sky-400" />
+                </div>
+              </div>
+            </div>
 
-            setLastCut(cut);
-            setCutEpochMs(cutEpoch);
-            setIsRunning(false);
+            <div className="mt-5 rounded-md border border-background/10 bg-background/5 px-4 py-3">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base">
+                <div className="flex items-center gap-2 text-background/90">
+                  <span className="inline-flex h-5 w-5 items-center justify-center text-background/85">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3Z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M2 20a6 6 0 0 1 12 0"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M10 20a6 6 0 0 1 12 0"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        opacity="0.6"
+                      />
+                    </svg>
+                  </span>
+                  <span>{syncedEventName ?? eventName}</span>
+                </div>
 
-            const channel = getRealtimeChannel();
-            channel.postMessage({
-              type: "LANE_CUT",
-              lane: laneLabel,
-              swimmer: swimmerName,
-              eventName: syncedEventName ?? eventName,
-              cutTime: cut,
-              cutEpochMs: cutEpoch,
-            });
-            channel.close();
-          }}
-          disabled={!canCut}
-          variant="brand"
-        >
-          Pausar y registrar
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => {
-            setIsRunning(false);
-            setStartEpochMs(null);
-            setLastCut(null);
-            setCutEpochMs(null);
-            setSyncedEventName(null);
-          }}
-        >
-          Reiniciar
-        </Button>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-3 w-3 rounded-full bg-sky-300" />
+                  <span className="font-semibold text-amber-300">
+                    {falseStart ? "Falso inicio" : statusLabel}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-2 text-base text-background/85">
+                Nadador: <span className="font-semibold text-background/95">{swimmerName}</span>
+              </div>
+            </div>
+
+            <div className="mt-10 text-center">
+              <div className="text-7xl font-semibold tracking-tight sm:text-8xl">{display}</div>
+            </div>
+
+            <div className="mt-10 flex justify-center">
+              <div className="flex w-full flex-col items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!startEpochMs) return;
+
+                    const cutEpoch = Date.now();
+                    const cut = formatCutMs(Math.max(0, cutEpoch - startEpochMs));
+
+                    setLastCut(cut);
+                    setCutEpochMs(cutEpoch);
+                    setIsRunning(false);
+
+                    const channel = getRealtimeChannel();
+                    channel.postMessage({
+                      type: "LANE_CUT",
+                      lane: laneLabel,
+                      swimmer: swimmerName,
+                      eventName: syncedEventName ?? eventName,
+                      cutTime: cut,
+                      cutEpochMs: cutEpoch,
+                    });
+                    channel.close();
+                  }}
+                  disabled={!canCut || falseStart}
+                  className="inline-flex h-16 w-[360px] items-center justify-center rounded-md bg-emerald-700/80 text-3xl font-semibold tracking-wide text-background shadow-sm hover:bg-emerald-700 disabled:opacity-50"
+                >
+                  REGISTRAR
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFalseStart(true);
+                    const channel = getRealtimeChannel();
+                    channel.postMessage({
+                      type: "LANE_FALSE_START",
+                      lane: laneLabel,
+                      swimmer: swimmerName,
+                      eventName: syncedEventName ?? eventName,
+                      epochMs: Date.now(),
+                    });
+                    channel.close();
+                  }}
+                  disabled={!canFalseStart}
+                  className="inline-flex h-12 w-[360px] items-center justify-center rounded-md bg-red-600/80 text-xl font-semibold tracking-wide text-background hover:bg-red-600 disabled:opacity-50"
+                >
+                  FALSO INICIO
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-10 rounded-md border border-background/10 bg-background/5 px-4 py-3 text-lg">
+              <span className="text-background/85">Tiempo registrado:</span>{" "}
+              <span className="font-semibold">{lastCut ?? "–"}</span>
+            </div>
+
+            <div className="mt-4">
+              <button
+                type="button"
+                disabled
+                className="inline-flex h-12 w-full items-center justify-center rounded-md bg-background/10 text-lg font-semibold text-background/40"
+              >
+                Corrección...
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

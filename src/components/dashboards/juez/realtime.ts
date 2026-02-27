@@ -16,6 +16,13 @@ export type RealtimeMessage =
       type: "RESET_ALL";
     }
   | {
+      type: "LANE_FALSE_START";
+      lane: string;
+      swimmer: string;
+      eventName: string;
+      epochMs: number;
+    }
+  | {
       type: "LANE_CUT";
       lane: string;
       swimmer: string;
